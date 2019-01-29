@@ -2,6 +2,7 @@ package twitchbot
 
 import org.kitteh.irc.client.library.Client
 import org.kitteh.irc.client.library.feature.twitch.TwitchSupport
+import twitchbot.util.FileUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -14,9 +15,8 @@ class TwitchClient {
             .nick(credentials.botName)
             .build()
 
-
     init {
-        Initializer(client, debug = true).init()
+        Initializer(client).init()
     }
 
     fun connect() {
@@ -28,12 +28,14 @@ class TwitchClient {
     }
 
 
-    class Initializer(private val client: Client, private val debug: Boolean = false) {
+    class Initializer(private val client: Client) {
+
+        private val properties = FileUtils.loadResourceAsProperties("app.properties")
 
         internal fun init() {
             TwitchSupport.addSupport(client) // add twitch support to IRC client
             client.eventManager.registerEventListener(EventListeners()) // register event listeners
-            if (debug) enableDebug()
+            if (properties.getProperty("debug")?.toBoolean() == true) enableDebug()
         }
 
         private fun enableDebug() {
