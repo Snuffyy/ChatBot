@@ -27,7 +27,6 @@ class TwitchClient {
         client.addChannel(channel)
     }
 
-
     class Initializer(private val client: Client) {
 
         private val properties = FileUtils.loadResourceAsProperties("app.properties")
@@ -35,7 +34,7 @@ class TwitchClient {
         internal fun init() {
             TwitchSupport.addSupport(client) // add twitch support to IRC client
             client.eventManager.registerEventListener(EventListeners()) // register event listeners
-            if (properties.getProperty("debug")?.toBoolean() == true) enableDebug()
+            if (properties.getProperty("debug")?.toBoolean() == true) enableDebug() // debug
         }
 
         private fun enableDebug() {

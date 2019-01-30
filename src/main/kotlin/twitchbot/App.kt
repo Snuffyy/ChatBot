@@ -8,5 +8,5 @@ fun main() {
     val client = TwitchClient()
 
     client.connect()
-    client.join("#twitch")
+    client.join("#notsnuffy")
 }
